@@ -1,3 +1,4 @@
+# coding=utf-8
 from __future__ import unicode_literals
 
 import os
@@ -14,6 +15,7 @@ class UtilitiesTest(RBTestBase):
 
     Any new modules created under rbtools/api should be tested here.
     """
+
     def test_check_install(self):
         """Testing "check_install" method."""
         self.assertTrue(checks.check_install([sys.executable, ' --version']))
@@ -48,6 +50,13 @@ class UtilitiesTest(RBTestBase):
         self.assertTrue(re.match('.*?%d.%d.%d' % sys.version_info[:3],
                         process.execute([sys.executable, '-V'])))
 
+    def test_execute_i18n(self):
+        sentence_list = ['Hello, World', '你好，世界', 'Привет мир', 'こんにちは世界',
+                         'Γειά σου Κόσμε']
+        for sentence in sentence_list:
+            self.assertTrue(sentence in process.execute(
+                [sys.executable, '-c', 'print "%s"' % sentence]))
+
     def test_is_valid_version(self):
         """Testing "is_valid_version" method."""
         self.assertTrue(checks.is_valid_version((1, 0, 0), (1, 0, 0)))
@@ -64,6 +73,7 @@ class UtilitiesTest(RBTestBase):
 
 class AliasTest(RBTestBase):
     """Tests for parameter substitution in rbtools aliases."""
+
     def _replace_arguments(self, cmd, args):
         """Convenience method to return a list instead of generator.
 

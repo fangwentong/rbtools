@@ -166,6 +166,9 @@ def execute(command,
 
     data, errors = p.communicate()
 
+    if results_unicode and six.PY2:
+        data = bytes.decode(data, 'utf-8')
+
     if split_lines:
         data = data.splitlines(True)
 

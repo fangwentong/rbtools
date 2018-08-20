@@ -26,7 +26,7 @@ def get_input(prompt):
     # crummy behavior if stdout is redirected to a file. Because this is often
     # paired with getpass (entering a username/password combination), we mimic
     # the behavior there, writing the prompt to stderr.
-    sys.stderr.write(str(prompt))
+    sys.stderr.write(prompt)
     return input()
 
 
