@@ -4,6 +4,7 @@ import getpass
 import os
 import subprocess
 import sys
+import six
 
 from distutils.util import strtobool
 from six.moves import input
@@ -35,7 +36,7 @@ def get_input(prompt, require=False):
         sys.stderr.write(prompt)
         return input()
 
-    prompt = str(prompt)
+    prompt = _prompt_to_str(prompt)
 
     if require:
         value = None
@@ -46,6 +47,13 @@ def get_input(prompt, require=False):
         value = _get_input()
 
     return value
+
+
+def _prompt_to_str(prompt):
+    if six.PY2:
+        return prompt.encode('utf-8')
+    else:
+        return str(prompt)
 
 
 def get_pass(prompt, require=False):
@@ -63,7 +71,7 @@ def get_pass(prompt, require=False):
         bytes:
         The entered password.
     """
-    prompt = str(prompt)
+    prompt = _prompt_to_str(prompt)
 
     if require:
         password = None
